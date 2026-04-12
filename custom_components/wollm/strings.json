@@ -1,0 +1,95 @@
+{
+  "title": "WoLLM-HA-Client",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to WoLLM-HA-Client",
+        "description": "Add a WoLLM server to Home Assistant.",
+        "data": {
+          "name": "Name",
+          "host": "Host or IP address",
+          "port": "Port",
+          "mac_address": "MAC address",
+          "api_key": "API key"
+        }
+      },
+      "reconfigure": {
+        "title": "Reconfigure WoLLM-HA-Client",
+        "data": {
+          "name": "Name",
+          "host": "Host or IP address",
+          "port": "Port",
+          "mac_address": "MAC address",
+          "api_key": "API key"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Authentication failed.",
+      "invalid_mac": "Invalid MAC address."
+    },
+    "abort": {
+      "already_configured": "This WoLLM server is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "WoLLM-HA-Client options",
+        "data": {
+          "scan_interval": "Scan interval (seconds)",
+          "wake_timeout": "Wake timeout (seconds)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "button": {
+      "wake_server": {
+        "name": "Wake server"
+      },
+      "load_selected_model": {
+        "name": "Load selected model"
+      },
+      "unload_model": {
+        "name": "Unload model"
+      },
+      "shutdown_server": {
+        "name": "Shutdown server"
+      },
+      "force_shutdown_server": {
+        "name": "Force shutdown server"
+      }
+    },
+    "select": {
+      "model": {
+        "name": "Model"
+      }
+    },
+    "sensor": {
+      "server_status": {
+        "name": "Server status"
+      },
+      "current_model": {
+        "name": "Current model"
+      },
+      "idle_seconds": {
+        "name": "Idle seconds"
+      },
+      "ram_used_mb": {
+        "name": "RAM used"
+      },
+      "ram_total_mb": {
+        "name": "RAM total"
+      },
+      "wol_boot": {
+        "name": "Wake-on-LAN boot"
+      }
+    },
+    "switch": {
+      "shutdown_on_idle": {
+        "name": "Shutdown on idle"
+      }
+    }
+  }
+}

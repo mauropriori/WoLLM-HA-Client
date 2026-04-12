@@ -1,0 +1,67 @@
+wake:
+  name: Wake server
+  description: Send a Wake-on-LAN magic packet and wait for WoLLM to come online.
+  fields:
+    entry_id:
+      name: Config entry ID
+      description: Required when more than one WoLLM server is configured.
+      example: 0123456789abcdef0123456789abcdef
+      selector:
+        text:
+
+load_model:
+  name: Load model
+  description: Load a WoLLM model on the selected server.
+  fields:
+    entry_id:
+      name: Config entry ID
+      description: Required when more than one WoLLM server is configured.
+      example: 0123456789abcdef0123456789abcdef
+      selector:
+        text:
+    model:
+      name: Model
+      description: Exact WoLLM model name to load.
+      example: mistral-7b
+      required: true
+      selector:
+        text:
+
+unload_model:
+  name: Unload model
+  description: Unload the active WoLLM model.
+  fields:
+    entry_id:
+      name: Config entry ID
+      description: Required when more than one WoLLM server is configured.
+      example: 0123456789abcdef0123456789abcdef
+      selector:
+        text:
+
+shutdown:
+  name: Shutdown server
+  description: Shut down the WoLLM host.
+  fields:
+    entry_id:
+      name: Config entry ID
+      description: Required when more than one WoLLM server is configured.
+      example: 0123456789abcdef0123456789abcdef
+      selector:
+        text:
+    force:
+      name: Force shutdown
+      description: Force shutdown when WoLLM would normally reject it.
+      example: false
+      selector:
+        boolean:
+
+refresh_models:
+  name: Refresh models
+  description: Refresh the cached WoLLM model list.
+  fields:
+    entry_id:
+      name: Config entry ID
+      description: Required when more than one WoLLM server is configured.
+      example: 0123456789abcdef0123456789abcdef
+      selector:
+        text:

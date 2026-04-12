@@ -1,0 +1,95 @@
+{
+  "title": "WoLLM-HA-Client",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connetti WoLLM-HA-Client",
+        "description": "Aggiungi un server WoLLM a Home Assistant.",
+        "data": {
+          "name": "Nome",
+          "host": "Host o indirizzo IP",
+          "port": "Porta",
+          "mac_address": "Indirizzo MAC",
+          "api_key": "Chiave API"
+        }
+      },
+      "reconfigure": {
+        "title": "Riconfigura WoLLM-HA-Client",
+        "data": {
+          "name": "Nome",
+          "host": "Host o indirizzo IP",
+          "port": "Porta",
+          "mac_address": "Indirizzo MAC",
+          "api_key": "Chiave API"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Autenticazione fallita.",
+      "invalid_mac": "Indirizzo MAC non valido."
+    },
+    "abort": {
+      "already_configured": "Questo server WoLLM è già configurato."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Opzioni WoLLM-HA-Client",
+        "data": {
+          "scan_interval": "Intervallo scansione (secondi)",
+          "wake_timeout": "Timeout di accensione (secondi)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "button": {
+      "wake_server": {
+        "name": "Accendi server"
+      },
+      "load_selected_model": {
+        "name": "Carica modello selezionato"
+      },
+      "unload_model": {
+        "name": "Scarica modello"
+      },
+      "shutdown_server": {
+        "name": "Spegni server"
+      },
+      "force_shutdown_server": {
+        "name": "Forza spegnimento server"
+      }
+    },
+    "select": {
+      "model": {
+        "name": "Modello"
+      }
+    },
+    "sensor": {
+      "server_status": {
+        "name": "Stato server"
+      },
+      "current_model": {
+        "name": "Modello corrente"
+      },
+      "idle_seconds": {
+        "name": "Secondi di inattività"
+      },
+      "ram_used_mb": {
+        "name": "RAM usata"
+      },
+      "ram_total_mb": {
+        "name": "RAM totale"
+      },
+      "wol_boot": {
+        "name": "Avvio Wake-on-LAN"
+      }
+    },
+    "switch": {
+      "shutdown_on_idle": {
+        "name": "Spegni in inattività"
+      }
+    }
+  }
+}
