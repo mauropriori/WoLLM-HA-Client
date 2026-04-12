@@ -19,7 +19,7 @@ Custom integration for Home Assistant that exposes a WoLLM server as a device wi
 Repository URL for HACS custom repository:
 
 ```text
-https://github.com/<your-account>/WoLLM-HA-Client
+https://github.com/mauropriori/WoLLM-HA-Client
 ```
 
 ## Configuration
@@ -70,12 +70,3 @@ When more than one WoLLM server is configured, pass `entry_id` to the service ca
 - If WoLLM is offline, API-backed entities become unavailable; the wake button stays available.
 - Normal shutdown may fail if WoLLM requires `forceShutdown=true`. In that case use the dedicated force shutdown button or service field.
 - GitHub Actions for `hacs` validation and `hassfest` are included to help keep the repository publishable.
-
-## Versioning
-
-This project follows Semantic Versioning.
-
-- `0.1.0` is the initial public release
-- patch releases (`0.1.1`) are for fixes
-- minor releases (`0.2.0`) are for new backward-compatible features
-- `1.0.0` will mark the first stable release
