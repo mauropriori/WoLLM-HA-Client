@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog and the project follows Semantic Versioning.
 
+## [0.1.2] - 2026-04-12
+
+### Fixed
+
+- Prepared a tagged patch release so HACS can resolve the update from a semantic version instead of commit hashes.
+
 ## [0.1.1] - 2026-04-12
 
 ### Fixed
