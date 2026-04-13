@@ -28,5 +28,6 @@ async def async_get_config_entry_diagnostics(
         "selected_model": runtime.selected_model,
         "effective_status": runtime.effective_status,
         "last_error": runtime.last_error,
+        "last_health": deepcopy(runtime.last_health_raw),
         "last_status": deepcopy(runtime.last_status_raw),
     }

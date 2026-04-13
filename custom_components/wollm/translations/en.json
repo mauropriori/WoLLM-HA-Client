@@ -86,9 +86,17 @@
         "name": "Wake-on-LAN boot"
       }
     },
+    "number": {
+      "idle_timeout_minutes": {
+        "name": "Idle timeout"
+      }
+    },
     "switch": {
       "shutdown_on_idle": {
         "name": "Shutdown on idle"
+      },
+      "unload_on_idle": {
+        "name": "Unload on idle"
       }
     }
   }

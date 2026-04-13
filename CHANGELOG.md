@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog and the project follows Semantic Versioning.
 
+## [0.2.0] - 2026-04-13
+
+### Changed
+
+- Aligned the Home Assistant client with WoLLM server `0.2.0`.
+- Switched runtime configuration updates to `POST /set`.
+- Added support for `unload_on_idle` and `idleTimeoutMinutes` through Home Assistant entities.
+- Exposed new `status` and `health` metadata in diagnostics and sensor attributes.
+
 ## [0.1.2] - 2026-04-12
 
 ### Fixed

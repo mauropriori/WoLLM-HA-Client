@@ -105,7 +105,14 @@ class WollmSensor(WollmCoordinatorEntity, SensorEntity):
         if self.runtime.last_error:
             attrs["last_error"] = self.runtime.last_error
         if self.runtime.status:
+            attrs["load_status"] = self.runtime.status.load_status
             attrs["shutdown_on_idle"] = self.runtime.status.shutdown_on_idle
+            attrs["unload_on_idle"] = self.runtime.status.unload_on_idle
             attrs["idle_timeout_minutes"] = self.runtime.status.idle_timeout_minutes
             attrs["wol_boot"] = self.runtime.status.wol_boot
+            attrs["cpu_count"] = self.runtime.status.cpu_count
+            attrs["gpu_count"] = self.runtime.status.gpu_count
+        if self.runtime.last_health_raw:
+            attrs["health_current_model"] = self.runtime.last_health_raw.get("currentModel")
+            attrs["health_load_status"] = self.runtime.last_health_raw.get("loadStatus")
         return attrs

@@ -4,8 +4,9 @@ Custom integration for Home Assistant that exposes a WoLLM server as a device wi
 
 - model select
 - wake, load, unload and shutdown buttons
-- shutdown-on-idle switch
-- status and RAM sensors
+- idle timeout number
+- shutdown-on-idle and unload-on-idle switches
+- status, health-derived metadata and RAM sensors
 - service calls for automations
 
 ## Install with HACS
@@ -44,7 +45,9 @@ Each WoLLM config entry creates one Home Assistant device with:
 - `button.unload_model`
 - `button.shutdown_server`
 - `button.force_shutdown_server`
+- `number.idle_timeout_minutes`
 - `switch.shutdown_on_idle`
+- `switch.unload_on_idle`
 - `sensor.server_status`
 - `sensor.current_model`
 - `sensor.idle_seconds`
@@ -69,4 +72,6 @@ When more than one WoLLM server is configured, pass `entry_id` to the service ca
 - Wake-on-LAN uses the configured MAC address and infers a broadcast target from the configured host when possible.
 - If WoLLM is offline, API-backed entities become unavailable; the wake button stays available.
 - Normal shutdown may fail if WoLLM requires `forceShutdown=true`. In that case use the dedicated force shutdown button or service field.
+- Runtime settings are aligned with WoLLM `0.2.0`: the integration now uses `POST /set` and exposes `idleTimeoutMinutes`, `shutdown_on_idle` and `unload_on_idle`.
+- The server status sensor exposes additional attributes such as `load_status`, `cpu_count`, `gpu_count`, `health_current_model` and `health_load_status`.
 - GitHub Actions for `hacs` validation and `hassfest` are included to help keep the repository publishable.

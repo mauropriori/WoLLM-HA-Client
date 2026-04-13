@@ -55,6 +55,7 @@ class WollmRuntimeData:
     selected_model: str | None = None
     operation_state: str | None = None
     last_error: str | None = None
+    last_health_raw: dict[str, Any] | None = None
     last_status_raw: dict[str, Any] | None = None
 
     @property
@@ -101,6 +102,7 @@ class WollmDataUpdateCoordinator(DataUpdateCoordinator[WollmStatus | None]):
         """Fetch latest status from WoLLM."""
         try:
             status = await self.runtime.client.async_get_status()
+            health = await self.runtime.client.async_health()
         except WollmAuthError as err:
             raise UpdateFailed(f"Authentication failed: {err}") from err
         except WollmConnectionError as err:
@@ -108,6 +110,7 @@ class WollmDataUpdateCoordinator(DataUpdateCoordinator[WollmStatus | None]):
         except WollmError as err:
             raise UpdateFailed(str(err)) from err
 
+        self.runtime.last_health_raw = health
         self.runtime.last_status_raw = status.raw
         self.runtime.clear_error()
         if status.current_model:
@@ -208,9 +211,19 @@ async def async_shutdown(runtime: WollmRuntimeData, force: bool) -> None:
         await runtime.coordinator.async_request_refresh()
 
 
-async def async_set_shutdown_on_idle(runtime: WollmRuntimeData, enabled: bool) -> None:
-    """Toggle shutdown on idle."""
-    await runtime.client.async_set_shutdown_on_idle(enabled)
+async def async_set_runtime_settings(
+    runtime: WollmRuntimeData,
+    *,
+    idle_timeout_minutes: int | None = None,
+    shutdown_on_idle: bool | None = None,
+    unload_on_idle: bool | None = None,
+) -> None:
+    """Update WoLLM runtime settings."""
+    await runtime.client.async_set_runtime_settings(
+        idle_timeout_minutes=idle_timeout_minutes,
+        shutdown_on_idle=shutdown_on_idle,
+        unload_on_idle=unload_on_idle,
+    )
     await runtime.coordinator.async_request_refresh()
 
 

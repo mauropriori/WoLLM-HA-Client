@@ -6,6 +6,7 @@ import asyncio
 from dataclasses import dataclass
 from http import HTTPStatus
 from typing import Any
+from urllib.parse import urlencode
 
 import aiohttp
 
@@ -39,10 +40,14 @@ class WollmStatus:
     """Normalized WoLLM status payload."""
 
     current_model: str | None
+    load_status: str | None
     shutdown_on_idle: bool
+    unload_on_idle: bool
     idle_timeout_minutes: int | None
     idle_seconds: int | None
     wol_boot: bool | None
+    cpu_count: int | None
+    gpu_count: int | None
     ram_used_mb: int | None
     ram_total_mb: int | None
     raw: dict[str, Any]
@@ -78,12 +83,17 @@ class WollmApiClient:
         """Fetch and normalize WoLLM status."""
         payload = await self._request("get", "/status")
         system = payload.get("system", {})
+        gpus = system.get("gpus")
         return WollmStatus(
             current_model=payload.get("currentModel"),
+            load_status=payload.get("loadStatus"),
             shutdown_on_idle=bool(payload.get("shutdownOnIdle", False)),
+            unload_on_idle=bool(payload.get("unloadOnIdle", True)),
             idle_timeout_minutes=payload.get("idleTimeoutMinutes"),
             idle_seconds=payload.get("idleSeconds"),
             wol_boot=payload.get("wolBoot"),
+            cpu_count=system.get("cpus"),
+            gpu_count=len(gpus) if isinstance(gpus, list) else None,
             ram_used_mb=system.get("ramUsedMb"),
             ram_total_mb=system.get("ramTotalMb"),
             raw=payload,
@@ -98,10 +108,24 @@ class WollmApiClient:
             if isinstance(model, dict) and model.get("name")
         ]
 
-    async def async_set_shutdown_on_idle(self, enabled: bool) -> dict[str, Any]:
-        """Enable or disable shutdown on idle."""
-        value = "true" if enabled else "false"
-        return await self._request("post", f"/session/start?shutdown_on_idle={value}")
+    async def async_set_runtime_settings(
+        self,
+        *,
+        idle_timeout_minutes: int | None = None,
+        shutdown_on_idle: bool | None = None,
+        unload_on_idle: bool | None = None,
+    ) -> dict[str, Any]:
+        """Update WoLLM runtime settings through the /set endpoint."""
+        params: dict[str, str | int] = {}
+        if idle_timeout_minutes is not None:
+            params["idleTimeoutMinutes"] = idle_timeout_minutes
+        if shutdown_on_idle is not None:
+            params["shutdown_on_idle"] = str(shutdown_on_idle).lower()
+        if unload_on_idle is not None:
+            params["unload_on_idle"] = str(unload_on_idle).lower()
+
+        suffix = f"?{urlencode(params)}" if params else ""
+        return await self._request("post", f"/set{suffix}")
 
     async def async_load_model(self, model_name: str) -> dict[str, Any]:
         """Load a specific model."""
